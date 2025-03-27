@@ -17,11 +17,17 @@
                 <input type="text" placeholder="Search for textbooks, electronics, furniture...">
                 <button>🔍</button>
             </div>
-            <nav>
+            <nav class="bar">
                 <ul>
-                    <li><a href="#" id="sell-btn">Sell</a></li>
-                    <li><a href="#" id="message-btn">Messages</a></li>
-                    <li><a href="#">Account</a></li>
+                    <li><a href="sell" id="sell-btn">Sell</a></li>
+                    <li><a href="messages" id="message-btn">Messages</a></li>
+                    <li class="dropdown">
+                        <a href="#" id="account-btn">Account</a>
+                        <div class="drop-content">
+                            <a href="login.html">Login</a>
+                            <a href="signup.html">Signup</a>
+                        </div>    
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -41,6 +47,7 @@
         <div class="products" id="products-container">
             <!-- Products will be loaded dynamically -->
         </div>
+
     </main>
     
     <!-- Sell Item Modal -->
@@ -58,7 +65,7 @@
                     <textarea id="description" rows="4" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="price">Price ($)</label>
+                    <label for="price">Price (£)</label>
                     <input type="number" id="price" min="0" step="0.01" required>
                 </div>
                 <div class="form-group">
@@ -82,6 +89,29 @@
                 </div>
             </form>
         </div>
+    </div>
+    <!--Message box-->
+    <div id="message-box" class="message-box">
+        <div class="message-header">
+            <h3>Messages</h3>
+            <span class="close-message">&times;</span>
+        </div>
+        <div class="message-content">
+            <div class="convo-list" id="convo-list">
+                <!--Convo message will he listed here-->
+            </div>
+            <div class="message-area" id="message-area">
+                <div class="messages" id="message">
+                    <!--Messages will be here-->
+                    <div class="no-convo-message">Select conversation or product to message</div>
+                </div>
+                <div class="message-input-container">
+                    <input type="text" id="message-input" placeholder="Type message" disabled>
+                    <button id="send-btn" disabled>Send</button>
+                </div>
+            </div>
+        </div>
+
     </div>
     
     <script src="index.js"></script>
