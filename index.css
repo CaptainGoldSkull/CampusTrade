@@ -177,7 +177,7 @@ header {
     border-left: none;
     border-right: none;
 } 
-.product-actions .favorite-btn {
+.product-actions .favourite-btn {
    display: flex;
    align-items: center;
    justify-content: center;

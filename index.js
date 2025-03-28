@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.addEventListener('click', function() {
                 const productId = this.getAttribute('data-id');
                 //const product = product.find(p => p.id == productId);
-                window.open('info.html?item=${product.id}', '_blank'); // Opens the info.html file into another tab 
+                window.open(`info.html?item=${product.id}`, '_blank'); // Opens the info.html file into another tab 
             });
         });
         // Update message buttons
@@ -310,6 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
     headerMessageBtn.addEventListener('click', function(e) {
         e.preventDefault();
         toggleMessageBox();
+        loadConversation();
     });
 
     // Load the conversations
@@ -317,6 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
         conversationList.innerHTML = '';
         convo.forEach(conv => {
             const conversationEl = document.createElement('div');
+            conversationEl.className = 'convo';
             conversationEl.setAttribute('data-id', conv.id);
 
             conversationEl.innerHTML = `
@@ -343,19 +345,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //Load messages for a convo
     function loadMessages(conversationId) {
+        const messageEl = document.getElementById('messages') || messageContainer;
         messageContainer.innerHTML = '';
         const messages = sampleMessages[conversationId] || [];
 
         messages.forEach(msg => {
             const messageEl = document.createElement('div');
-            messageEl.className = `message-bubble-${msg.sender == 'you' ? 'sent' : 'received'}`;
+            messageEl.className = `message-bubble ${msg.sender == 'you' ? 'sent' : 'received'}`;
             messageEl.innerHTML = `${msg.text} <div class="message-time">${msg.time}</div>`;
             messageContainer.appendChild(messageEl);
         });
 
         // Allow to input when convo is selected
-        messageInput.disable = false;
-        sendBtn.disable = false;
+        messageInput.disabled = false;
+        sendBtn.disabled = false;
         messageContainer.scrollTop = messageContainer.scrollHeight;
     }
 
@@ -374,7 +377,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const now = new Date();
         const hours = now.getHours();
         const minutes = now.getMinutes();
-        const timeString = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${hours >= 12 ? 'pm' : 'am'}`;
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        const formattedHours = hours % 12 || 12;
+        const timeString = `${formattedHours}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
+
         const messageEl = document.createElement('div');
         messageEl.className = 'message-bubble-sent';
         messageEl.innerHTML = `${text} <div class="message-time"> ${timeString}</div>`;
@@ -414,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Find the convo with seller is exist
                 const existingConvo = convo.find(c => c.productId === productId);
                 if (existingConvo) {
-                    const convoEl = document.querySelector(`.convo[data-id="${existingConvo}"]`);
+                    const convoEl = document.querySelector(`.convo[data-id="${existingConvo.id}"]`);
                     if (convoEl) {
                         convoEl.click();
                     }
@@ -424,13 +430,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="no-convo-message">
                             Start a conversation with ${seller} about this certain product
                         </div>`;
-                    messageInput.disable = false;
-                    sendMessageBtn.disable = false;
+                    messageInput.disabled = false;
+                    sendBtn.disabled = false;
                 }
             });
         });
     }
     displayProducts();
-    loadConvo();
+    loadConversation();
     updateProductMessageButtons();
 });
