@@ -4,8 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Purchase page</title>
+    <link rel="stylesheet" href="info.css">
 </head>
 <body>
-    <h1>Purchase page</h1>
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="logo">
+                    <div class="logo-section">
+                        <span>🎓</span>
+                        <span>CampusTrade</span>
+                    </div>
+                </div>
+                <div class="search-section">
+                    <div class="search-bar">
+                        <input type="text" size="50" placeholder="Search for Electronics, Furniture, and much more...">
+                        <button>Search</button>
+                    </div>
+                </div>
+                <div class="nav-section">
+                    <nav class="bar">
+                        <ul>
+                            <li><a href="messages" id="message-btn">Messages</a></li>
+                            <li class="dropdown">
+                                <a href="#" id="account-btn">Account</a>
+                                <div class="drop-content">
+                                    <a href="login.html">Login</a>
+                                    <a href="signup.html">Signup</a>
+                                </div>    
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="main-container">
+        <div class="container" style="flex-direction: column; align-items: flex-start;">
+            <div class="breadcrum">
+                <a href="index.html">Home</a> &gt; <span id="product-category">Category</span> &gt; <span id="product-name">Product</span>
+            </div>
+
+            <div id="product-details" class="product-details-section">
+                <div class="loading">Loading details for product...</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CampusTrade</h3>
+                    <p>Buy and sell items within your university</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Terms and services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 CampusTrade. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="info.js"></script>
 </body>
 </html>

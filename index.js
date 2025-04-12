@@ -136,8 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.purchase-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const productId = this.getAttribute('data-id');
-                //const product = product.find(p => p.id == productId);
-                window.open(`info.html?item=${product.id}`, '_blank'); // Opens the info.html file into another tab 
+                window.open(`info.html?itemId=${productId}`, '_blank');
             });
         });
         // Update message buttons
@@ -338,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (convo.length === 0) {
             messageContainer.innerHTML = `
                 <div class="no-convo-message">
-                    No conversations. Start one by messaging a seller
+                    No conversations. Start one by messaging a seller.
                 </div>`;
         }
     }
