@@ -1,6 +1,8 @@
+
 //Initialse the app
 document.addEventListener('DOMContentLoaded', function() {
 
+    
     // Sample product data
     let products = [
         {
@@ -113,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="product-actions">
                         <button class="btn btn-primary message-btn" data-id="${product.id}">Message</button>
                         <button class="btn btn-primary purchase-btn" data-id="${product.id}">Purchase</button>
-                        <button class="btn btn-outline favorite-btn" data-id="${product.id}">♡ Save</button>
+                        <button class="btn btn-outline add-to-basket-btn" data-id="${product.id}">Basket 🛒</button>
                     </div>
                 </div>
             `;
@@ -127,9 +129,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add event listeners to product buttons
     function addProductButtonListeners() {
-        document.querySelectorAll('.favourite-btn').forEach(btn => {
+        document.querySelectorAll('.add-to-basket-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                btn.textContent = btn.textContent === '♡ Save' ? '♥ Saved' : '♡ Save';
+                const productId = this.getAttribute('data-id');
+                addToBasket(productId);
             });
         });
         
@@ -139,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.open(`info.html?itemId=${productId}`, '_blank');
             });
         });
+
         // Update message buttons
         updateProductMessageButtons();
     }
@@ -181,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="product-actions">
                         <button class="btn btn-primary message-btn" data-id="${product.id}">Message</button>
                         <button class="btn btn-primary purchase-btn" data-id="${product.id}">Purchase</button>
-                        <button class="btn btn-outline favorite-btn" data-id="${product.id}">♡ Save</button>
+                        <button class="btn btn-outline add-to-basket-btn" data-id="${product.id}">Basket 🛒</button>
                     </div>
                 </div>
             `;
@@ -191,6 +195,43 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Re-add event listeners
         addProductButtonListeners();
+    }
+
+    function addBasketStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .basket-count {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background-color: red;
+                color: white;
+                border-radius: 50%;
+                width: 18px;
+                height: 18px;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Position the basket count relative to the basket link */
+            nav.bar ul li a[href="basket.html"] {
+                position: relative;
+            }
+            
+            .toast-message {
+                animation: fadeInOut 3s;
+            }
+            
+            @keyframes fadeInOut {
+                0% { opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     // Event Listeners
@@ -435,7 +476,89 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    // Function to add product to basket - add this to your index.js file
+    function addToBasket(productId) {
+    
+        productId = parseInt(productId);
+    
+        let basketItems = JSON.parse(localStorage.getItem('basketItems')) || [];
+        
+        // Check if the product is already in the basket
+        const existingItemIndex = basketItems.findIndex(item => item.id === productId);
+        
+        if (existingItemIndex !== -1) {
+            // If already in basket, increase quantity
+            basketItems[existingItemIndex].quantity += 1;
+        } else {
+            // Find the product in our products array
+            const product = products.find(p => p.id === productId);
+            
+            if (product) {
+                // Add new item to basket with quantity of 1
+                basketItems.push({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    seller: product.seller,
+                    quantity: 1
+                });
+            }
+        }
+        
+        // Save updated basket back to localStorage
+        localStorage.setItem('basketItems', JSON.stringify(basketItems));
+        
+        // Update basket count indicator
+        updateBasketCount();
+        
+        // Show confirmation message
+        showToast('Item added to basket');
+    }
+
+    // Update basket count in UI
+    function updateBasketCount() {
+        let basketItems = JSON.parse(localStorage.getItem('basketItems')) || [];
+        const totalItems = basketItems.reduce((total, item) => total + item.quantity, 0);
+        
+        const basketCountElement = document.querySelector('.basket-count');
+        if (basketCountElement) {
+            basketCountElement.textContent = totalItems;
+            basketCountElement.style.display = totalItems > 0 ? 'flex' : 'none';
+        } else if (totalItems > 0) {
+            const basketBtn = document.querySelector('a[href="basket.html"]');
+            if (basketBtn) {
+                const countElement = document.createElement('span');
+                countElement.className = 'basket-count';
+                countElement.textContent = totalItems;
+                basketBtn.appendChild(countElement);
+            }
+        }
+    }
+
+    // Show toast notification
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.textContent = message;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.backgroundColor = 'var(--primary)';
+        toast.style.color = 'white';
+        toast.style.padding = '10px 20px';
+        toast.style.borderRadius = '4px';
+        toast.style.zIndex = '1000';
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 3000);
+    }
     displayProducts();
     loadConversation();
     updateProductMessageButtons();
+    basketCount();
 });

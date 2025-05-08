@@ -1,5 +1,5 @@
 :root {
-    --primary: #4169E1;
+    --primary: #000000;
     --secondary: #FF8C00;
     --bg-light: #f8f9fa;
     --text-dark: #333;
@@ -318,10 +318,11 @@ header {
     right: 0;
     top: 100%;
     min-width: 160px;
-    min-width: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 4px;
     overflow: hidden;
+    cursor: pointer;
 }
 .drop-content a {
     color: white;
@@ -331,6 +332,7 @@ header {
     display: block;
     border-radius: 0;
     margin: 0;
+    cursor: pointer !important;
 }
 .drop-content a:hover {
     background-color: black;
@@ -341,6 +343,7 @@ header {
 }
 .dropdown:hover .dropbtn {
     background-color: black;
+    cursor: pointer !important;
 }
 /* Message box */
 .message-box {

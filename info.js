@@ -69,7 +69,12 @@ document.addEventListener('DOMContentLoaded', function(){
     const productDetails = document.getElementById('product-details');
     const searchInput = document.querySelectorAll('.search-bar input');
     const searchButton = document.querySelectorAll('.search-bar button');
-    const messageBtn = document.getElementById('contact-seller-btn');
+    const messageBox = document.getElementById('message-box');
+    const closeMessageBtn = document.querySelector('.close-message');
+    const headerMessageBtn = document.getElementById('message-btn');
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    const messageContainer = document.getElementById('messages');
 
     // Get product ID from URL 
     const urlParams = new URLSearchParams(window.location.search);
@@ -119,9 +124,8 @@ document.addEventListener('DOMContentLoaded', function(){
                         <p>${product.description}</p>
                     </div>
                     <div class="product-actions">
-                        <button id="contact-seller-btn" class="btn btn-primary">Contact Seller</button>
                         <button id="purchase-now-btn" class="btn btn-primary">Purchase Now</button>
-                        <button id="save-item-btn" class="btn btn-outline">♡ Save</button>
+                        <button id="add-to-basket-btn" class="btn btn-outline">Add to basket</button>
                     </div>
                 </div>
             </div>
@@ -132,18 +136,25 @@ document.addEventListener('DOMContentLoaded', function(){
                 </div>
             </div>
         `;
-
-        // Add event listeners for the buttons 
-        document.getElementById('contact-seller-btn').addEventListener('click', () => {
-            alert(`Contact ${product.seller} at ${product.contactEmail}`);
+        addProductButtonListeners();
+    }
+    // Add event listeners for the buttons 
+    function addProductButtonListeners() {
+        document.getElementById('purchase-now-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                window.open(`basket.html?itemId=${productId}`);
+            });
         });
 
-        document.getElementById('purchase-now-btn').addEventListener('click', () => {
-            alert(`Your are buying now ${product.title} for £${product.price.toFixed(2)}`);
-        });
-        document.getElementById('save-item-btn').addEventListener('click', () => {
-            this.textContent = this.textContent === '♡ Save' ? '♥ Saved' : '♡ Save';
-        });
+        const addToBasket = document.getElementById('add-to-basket-btn');
+        if (addToBasket) {
+            addToBasket.addEventListener('click', function() {
+                const urlParams = new URLSearchParams(window.location.search)
+                const productId = urlParams.get('itemId');
+                addToBasket(productId);
+            });
+        }
     }
 
     // Function to get the some product category
@@ -185,5 +196,94 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
+    // Toggle the message box
+    function toggleMessageBox() {
+        messageBox.classList.toggle('active');
+
+        if (messageBox.classList.contains('active')) {
+            messageBox.style.transform = 'translateY(0)';
+        } else {
+            messageBox.style.transform = 'translateY(calc(100% + 20px))';
+        }
+    }
+
+    // Close message box
+    closeMessageBtn.addEventListener('click', function() {
+        messageBox.classList.remove('active');
+    });
+
+    //Open message from header message button
+    if (headerMessageBtn) {
+        headerMessageBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleMessageBox();
+        });
+    }
+
+    // contact seller button 
+    setTimeout(() => {
+        const contactSellerBtn = document.getElementById('contact-seller-btn');
+        if (contactSellerBtn) {
+            contactSellerBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log("Contact seller clicked");
+
+                messageContainer.innerHTML = '';
+                
+                // Show message of who you are contacting
+                if (product) {
+                    const messageEl = document.createElement('div');
+                    messageEl.className = 'no-convo-message';
+                    messageEl.textContent = `Send a message to ${product.seller} about ${product.title}`;
+                    messageContainer.appendChild(messageEl);
+                }
+                messageInput.disabled = false;
+                sendBtn.disabled = false;
     
+                toggleMessageBox();
+                console.log("Message active")
+            });
+        }
+    }, 100);
+
+    // Send a message
+    sendBtn.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    function sendMessage() {
+        const text = messageInput.value.trim();
+        if (text === '') return;
+
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        const formattedHours = hours % 12 || 12;
+        const timeString = `${formattedHours}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
+
+        const messageEl = document.createElement('div');
+        messageEl.className = 'message-bubble-sent';
+        messageEl.innerHTML = `${text} <div class="message-time"> ${timeString}</div>`;
+
+        messageContainer.appendChild(messageEl);
+        messageInput.value = '';
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+
+        // Reply after delay
+        setTimeout(() => {
+            const replyEl = document.createElement('div');
+            replyEl.className = 'message-bubble-received';
+            replyEl.innerHTML = `Thank you for the message, I will get back as soon a possible. 
+            <div class="message-time">${timeString}</div>`;
+
+            messageContainer.appendChild(replyEl);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+
+        }, 1000);
+    }
+
 });
