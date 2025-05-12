@@ -1,10 +1,17 @@
+<?php 
+include('PHP/sessionManager.php');
+if (!isLoggedIn()) {
+    // add page redirect here
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampusTrade</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <header>
@@ -24,11 +31,11 @@
                     <li class="dropdown">
                         <a href="#" id="account-btn">Account</a>
                         <div class="drop-content">
-                            <a href="account/login.html">Login</a>
-                            <a href="account/signup.html">Signup</a>
+                            <a href="html/login.html">Login</a>
+                            <a href="html/signup.html">Signup</a>
                         </div>    
                     </li>
-                    <li><a href="basket/basket.html">Basket 🛒</a></li>
+                    <li><a href="html/basket.html">Basket 🛒</a></li>
                 </ul>
             </nav>
         </div>
@@ -115,6 +122,6 @@
 
     </div>
     
-    <script src="index.js"></script>
+    <script src="javascript/index.js"></script>
 </body>
 </html>

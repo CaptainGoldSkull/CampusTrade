@@ -18,4 +18,9 @@ body {
     padding: 10px 15px;
     cursor: pointer;
   }
-  
+  .error-message {
+    color: red;
+    font-size: 0.875em; /* Small text */
+    margin-bottom: 4px;
+    display: none; /* Hidden by default */
+  }

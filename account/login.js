@@ -1,17 +1,25 @@
-function handleLogin(event) {
-    event.preventDefault(); // Prevent form submission for demo purposes
+document.getElementById('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
   
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-  
-    // Simulate checking login credentials
-    if (email && password) {
-      // Correct redirection path
-      window.location.href = "../../../index.html";
-      return true;
-    } else {
-      alert('Please fill in both fields.');
-      return false;
-    }
-}
-  
+  try {
+      const response = await fetch('PHP/Login.php', {
+          method: 'POST',
+          body:formData,
+          credentials:'include'
+      });
+
+      const result = await response.json();
+      if (result.success) {
+          window.location.href = "../Homepage.php" // Lets make this go to the homepage at some point
+      } else {
+          document.getElementById("errorText").textContent = result.error; 
+      }
+  } catch (err) {
+      document.getElementById('errorText').textContent = "Something went wrong.";
+      console.error(err);
+  }
+
+})
