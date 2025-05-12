@@ -1,4 +1,3 @@
-
 //Initialse the app
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -13,7 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "/api/placeholder/400/320",
             seller: "Alex Johnson",
             sellerAvatar: "/api/placeholder/50/50",
-            date: "2 days ago"
+            date: "2 days ago",
+            description: "Well-maintained calculus textbook with minimal highlighting.",
+            condition: "Good",
+            location: "Main Campus"
         },
         {
             id: 2,
@@ -23,7 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "/api/placeholder/400/320",
             seller: "Jamie Smith",
             sellerAvatar: "/api/placeholder/50/50",
-            date: "5 days ago"
+            date: "5 days ago",
+            description: "Lightly used Dell XPS 13 with all original accessories.",
+            condition: "Like New",
+            location: "East Campus"
         },
         {
             id: 3,
@@ -33,7 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "/api/placeholder/400/320",
             seller: "Casey Williams",
             sellerAvatar: "/api/placeholder/50/50",
-            date: "1 week ago"
+            date: "1 week ago",
+            description: "Desk and chair set from IKEA, perfect for dorm rooms.",
+            condition: "Good",
+            location: "West Campus"
         },
         {
             id: 4,
@@ -43,7 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "/api/placeholder/400/320",
             seller: "Taylor Brown",
             sellerAvatar: "/api/placeholder/50/50",
-            date: "3 days ago"
+            date: "3 days ago",
+            description: "Clean biology lab coat, size medium.",
+            condition: "Good",
+            location: "Science Building"
         },
         {
             id: 5,
@@ -53,7 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "/api/placeholder/400/320",
             seller: "Jordan Lee",
             sellerAvatar: "/api/placeholder/50/50",
-            date: "Just now"
+            date: "Just now",
+            description: "Professional statistics tutoring session.",
+            condition: "N/A",
+            location: "Library"
         },
         {
             id: 6,
@@ -63,7 +77,10 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "/api/placeholder/400/320",
             seller: "Morgan Wilson",
             sellerAvatar: "/api/placeholder/50/50",
-            date: "4 days ago"
+            date: "4 days ago",
+            description: "Beautiful acoustic guitar in excellent condition.",
+            condition: "Like New",
+            location: "Music Hall"
         }
     ];
 
@@ -131,15 +148,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function addProductButtonListeners() {
         document.querySelectorAll('.add-to-basket-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const productId = this.getAttribute('data-id');
+                const productId = parseInt(this.getAttribute('data-id'));
                 addToBasket(productId);
             });
         });
         
         document.querySelectorAll('.purchase-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const productId = this.getAttribute('data-id');
-                window.open(`info.html?itemId=${productId}`, '_blank');
+                const productId = parseInt(this.getAttribute('data-id'));
+                window.open(`info/info.html?itemId=${productId}`, '_blank');
             });
         });
 
@@ -159,7 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const filteredProducts = products.filter(product => 
             product.title.toLowerCase().includes(searchTerm) ||
-            product.category.toLowerCase().includes(searchTerm)
+            product.category.toLowerCase().includes(searchTerm) ||
+            product.seller.toLowerCase().includes(searchTerm)
         );
         
         productsContainer.innerHTML = '';
@@ -216,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             /* Position the basket count relative to the basket link */
-            nav.bar ul li a[href="basket.html"] {
+            nav.bar ul li a[href="basket/basket.html"] {
                 position: relative;
             }
             
@@ -278,7 +296,11 @@ document.addEventListener('DOMContentLoaded', function() {
             image: document.getElementById('image').value || "/api/placeholder/400/320",
             seller: "You",
             sellerAvatar: "/api/placeholder/50/50",
-            date: "Just now"
+            date: "Just now",
+            // Add description here
+            description: document.getElementById('description').value || "No description provided.",
+            condition: "New",
+            location: "Campus"
         };
         
         products.unshift(newProduct);
@@ -378,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (convo.length === 0) {
             messageContainer.innerHTML = `
                 <div class="no-convo-message">
-                    No conversations. Start one by messaging a seller.
+                    No conversations. Start one by toastaging a seller.
                 </div>`;
         }
     }
@@ -476,11 +498,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
     // Function to add product to basket - add this to your index.js file
     function addToBasket(productId) {
-    
         productId = parseInt(productId);
-    
+        
         let basketItems = JSON.parse(localStorage.getItem('basketItems')) || [];
         
         // Check if the product is already in the basket
@@ -513,7 +535,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateBasketCount();
         
         // Show confirmation message
-        showToast('Item added to basket');
+        showToast('Its in your basket!');
     }
 
     // Update basket count in UI
@@ -526,7 +548,7 @@ document.addEventListener('DOMContentLoaded', function() {
             basketCountElement.textContent = totalItems;
             basketCountElement.style.display = totalItems > 0 ? 'flex' : 'none';
         } else if (totalItems > 0) {
-            const basketBtn = document.querySelector('a[href="basket.html"]');
+            const basketBtn = document.querySelector('a[href="basket/basket.html"]');
             if (basketBtn) {
                 const countElement = document.createElement('span');
                 countElement.className = 'basket-count';
@@ -557,8 +579,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.removeChild(toast);
         }, 3000);
     }
+
+    // Initialise
+    addBasketStyles();
     displayProducts();
     loadConversation();
     updateProductMessageButtons();
-    basketCount();
+    updateBasketCount();
 });

@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadBasket() {
         let basketItems = JSON.parse(localStorage.getItem('basketItems')) || [];
 
-        if (baskekItems.length === 0) {
+        if (basketItems.length === 0) {
             basketCount.innerHTML = `
                 <div class="empty-basket">
                     <p>Your Basket is empty.</p>
-                    <a href="index.html" class="btn btn-primary">Continue shopping</a>
+                    <a href="../index.html" class="btn btn-primary">Continue shopping</a>
                 </div>
                 `;
             return;
@@ -83,11 +83,20 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
+        // Remove item button
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const item = this.closest('.basket-item');
+                const id = parseInt(item.dataset.id);
+                removeItem(id);
+            });
+        });
+
         //checkout button 
         const checkoutBtn = document.querySelector('.checkout-btn');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', function() {
-                window.location.href = 'checkout.html';
+                window.location.href = '../checkout/checkout.html';
             });
         }
     }

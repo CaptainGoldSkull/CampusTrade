@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basket</title>
-    <link rel="stylesheet" href="basket.css">
+    <title>Purchase page</title>
     <link rel="stylesheet" href="info.css">
 </head>
 <body>
@@ -14,7 +13,7 @@
                 <div class="logo">
                     <div class="logo-section">
                         <span>🎓</span>
-                        <a href="index.html">CampusTrade</a>
+                        <a href="../index.html">CampusTrade</a>
                     </div>
                 </div>
                 <div class="search-section">
@@ -26,32 +25,56 @@
                 <div class="nav-section">
                     <nav class="bar">
                         <ul>
+                            <li><a href="messages" id="message-btn">Messages</a></li>
                             <li class="dropdown">
                                 <a href="#" id="account-btn">Account</a>
                                 <div class="drop-content">
-                                    <a href="login.html">Login</a>
-                                    <a href="signup.html">Signup</a>
+                                    <a href="../account/login.html">Login</a>
+                                    <a href="../account/signup.html">Signup</a>
                                 </div>    
                             </li>
-                            <li><a href="basket.html" id="basket-btn">Basket 🛒</a></li>
+                            <li><a href="../basket/basket.html" id="basket-btn">Basket 🛒</a></li>
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
     </header>
+    <main class="main-container">
+        <div class="container" style="flex-direction: column; align-items: flex-start;">
+            <div class="breadcrum">
+                <a href="../index.html">Home</a> &gt; <span id="product-category">Category</span> &gt; <span id="product-name">Product</span>
+            </div>
 
-    <main>
-        <div class="basket-container">
-            <h1 class="basket-title">Your basket</h1>
-            <div id="basket-content">
-                <div class="empty-basket">
-                    <p>Your basket is empty</p>
-                    <a href="index.html" class="btn btn-primary">Continue shopping</a>
-                </div>
+            <div id="product-details" class="product-details-section">
+                <div class="loading">Loading details for product...</div>
             </div>
         </div>
     </main>
+
+    <!--Message box-->
+    <div id="message-box" class="message-box">
+        <div class="message-header">
+            <h3>Messages</h3>
+            <span class="close-message">&times;</span>
+        </div>
+        <div class="message-content">
+            <div class="convo-list" id="convo-list">
+                <!--Convo message will he listed here-->
+            </div>
+            <div class="message-area" id="message-area">
+                <div class="messages" id="messages">
+                    <!--Messages will be here-->
+                    <div class="no-convo-message">Select conversation or product to message</div>
+                </div>
+                <div class="message-input-container">
+                    <input type="text" id="message-input" placeholder="Type message" disabled>
+                    <button id="send-btn" disabled>Send</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <footer class="footer">
         <div class="container">
@@ -63,7 +86,7 @@
                 <div class="footer-section">
                     <h3>Quick links</h3>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="../index.html">Home</a></li>
                         <li><a href="#">About us</a></li>
                         <li><a href="#">Contact</a></li>
                         <li><a href="#">Terms and services</a></li>
@@ -75,6 +98,6 @@
             </div>
         </div>
     </footer>
-    <script src="basket.js"></script>
+    <script src="info.js"></script>
 </body>
 </html>

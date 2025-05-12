@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadOrderSummary() {
         let basketItems = JSON.parse(localStorage.getItem('basketItems')) || [];
         
+        console.log('Basket items:', basketItems); // Debug log
+        
         if (basketItems.length === 0) {
             orderItemsContainer.innerHTML = `
                 <div class="empty-order">
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="order-item-details">
                         <div class="order-item-title">${item.title}</div>
                         <div class="order-item-price">
-                            <span>${item.quantity} × £${item.price.toFixed(2)}</span>
+                            <span>${item.quantity} x £${item.price.toFixed(2)}</span>
                             <span>£${(item.price * item.quantity).toFixed(2)}</span>
                         </div>
                     </div>
@@ -45,6 +47,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const subtotal = calculateSubtotal(basketItems);
         subtotalElement.textContent = `£${subtotal.toFixed(2)}`;
         totalElement.textContent = `£${subtotal.toFixed(2)}`;
+        
+        // Enable place order button
+        placeOrderBtn.disabled = false;
+        placeOrderBtn.style.opacity = '1';
     }
     
     // Calculate subtotal
@@ -60,6 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Basic form validation
         if (!shippingForm.checkValidity() || !paymentForm.checkValidity()) {
             alert('Please fill in all required fields correctly.');
+            shippingForm.reportValidity();
+            paymentForm.reportValidity();
             return;
         }
         
@@ -70,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Process order
     function processOrder() {
         // In a real application, you would submit the order to a server
-        // For this demo, we'll just clear the basket and redirect to a success page
+        // The server will is being implemented. 
         
         // Create order confirmation details
         const orderDetails = {
@@ -95,10 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('basketItems');
         
         // Show success message and redirect
-        alert('Order placed successfully! Thank you for shopping with CampusTrade.');
+        alert(`Order placed successfully! Order ID: ${orderDetails.orderId}\nThank you for shopping with CampusTrade.`);
         
-        // In a real application, redirect to order confirmation page
-        window.location.href = 'index.html';
+        // redirect to order confirmation page
+        // For now, redirect to home page
+        window.location.href = '../index.html';
     }
     
     // Generate a random order ID
@@ -116,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             basketCountElement.textContent = totalItems;
             basketCountElement.style.display = totalItems > 0 ? 'flex' : 'none';
         } else if (totalItems > 0) {
-            const basketBtn = document.querySelector('a[href="basket.html"]');
+            const basketBtn = document.querySelector('a[href="../basket/basket.html"]');
             if (basketBtn) {
                 const countElement = document.createElement('span');
                 countElement.className = 'basket-count';
@@ -146,15 +155,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             /* Position the basket count relative to the basket link */
-            .bar ul li a[href="basket.html"] {
+            .bar ul li a[href="../basket/basket.html"] {
                 position: relative;
             }
         `;
         document.head.appendChild(style);
     }
     
-    // Initialize
+    // Initialise
     loadOrderSummary();
     addBasketStyles();
     updateBasketCount();
+
 });
