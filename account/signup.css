@@ -1,0 +1,44 @@
+:root {
+    --primary: #000000;
+    --secondary: #FF8C00;
+    --bg-light: #f8f9fa;
+    --text-dark: #333;
+    --border: #ddd;
+  }
+  
+  body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    
+    button {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+  
+    header {
+      background-color: var(--primary);
+      padding: 1rem 2rem;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  
