@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Integrate database.php getting database from brighton domains
     require 'db.php';
-    print_r($_POST);
+    //print_r($_POST);
 
     // Get POST data safely
     $firstName = htmlspecialchars($_POST['firstName']) ?? '';
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssss", $firstName , $lastName , $email , $passHash);
 
         if ($stmt->execute()) {
-            echo json_encode(["message" => "User '$firstName' '$lastName' added successfully!", "id" => $stmt->insert_id]); 
+            echo json_encode(["message" => "User '$firstName' '$lastName' added successfully!","success" => true, "id" => $stmt->insert_id]); 
         } else {
             echo json_encode(["error" => "Error inserting user"]);
         }

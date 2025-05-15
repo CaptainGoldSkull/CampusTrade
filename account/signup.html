@@ -14,7 +14,6 @@
             <span>🎓</span>
             <span>CampusTrade</span>
         </div>
-        </nav>
     </div>
 </header>
 
@@ -23,16 +22,18 @@
 
   <div class="form-container">
     <h2>Sign Up</h2>
-    <form id="signupForm" action="../backendPhP/SignUp.php" method = "POST">
+    <form id="signupForm">
+      <div class="error-message" id="errorText">This field is required.</div>
       <label for="firstName">First Name:</label><br>
         <input type="text" id = "firstName" name="firstName" required><br>
         <label for="lastName">Last Name:</label><br>
         <input type="text" id = "lastName" name = "lastName" required><br>
         <label for="email">Email:</label><br>
+        <!--pattern=".+@uni\.brighton\.ac\.uk"-->
         <input type="email"
         id = "email"
         maxlength="64"
-        pattern=".+@uni\.brighton\.ac\.uk" 
+         
         name="email"
         required><br>
         <label for="password">Password:</label><br>
