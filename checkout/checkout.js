@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             orderItemsContainer.innerHTML = `
                 <div class="empty-order">
                     <p>Your basket is empty. Please add items before checkout.</p>
-                    <a href="index.html">Continue shopping</a>
+                    <a href="Homepage.php">Continue shopping</a>
                 </div>
             `;
             placeOrderBtn.disabled = true;
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // redirect to order confirmation page
         // For now, redirect to home page
-        window.location.href = '../index.html';
+        window.location.href = '../Homepage.php';
     }
     
     // Generate a random order ID

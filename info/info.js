@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function(){
         displayProductDetails(product);
         document.title = `${product.title} - CampusTrade`;
     } else {
-        productDetails.innerHTML = '<div class="not-found">Product not found. <a href="../index.html">Return to homepage</a></div>';
+        productDetails.innerHTML = '<div class="not-found">Product not found. <a href="../Homepage.php">Return to homepage</a></div>';
     }
 
     // Function to display product details
@@ -313,12 +313,12 @@ document.addEventListener('DOMContentLoaded', function(){
     // Search functionality
     if (searchButton && searchInput) {
         searchButton.addEventListener('click', function() {
-            window.location.href = `../index.html?search=${searchInput.value}`;
+            window.location.href = `../Homepage.php?search=${searchInput.value}`;
         });
 
         searchInput.addEventListener('click', function(e) {
             if (e.key === 'Enter')  {
-                window.location.href = `../index.html?search=${searchInput.value}`;
+                window.location.href = `../Homepage.php?search=${searchInput.value}`;
             }
         });
     }

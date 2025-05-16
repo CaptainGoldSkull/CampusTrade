@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             basketCount.innerHTML = `
                 <div class="empty-basket">
                     <p>Your Basket is empty.</p>
-                    <a href="../index.html" class="btn btn-primary">Continue shopping</a>
+                    <a href="../Homepage.php" class="btn btn-primary">Continue shopping</a>
                 </div>
                 `;
             return;
