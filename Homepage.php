@@ -133,7 +133,7 @@ if (!isLoggedIn()) {
                         <ul>
                             <li><a href="../Homepage.php">Home</a></li>
                             <li><a href="#">About us</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="../contact.html">Contact</a></li>
                             <li><a href="#">Terms and services</a></li>
                         </ul>
                     </div>
