@@ -121,6 +121,28 @@ if (!isLoggedIn()) {
         </div>
 
     </div>
+    <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>CampusTrade</h3>
+                        <p>Buy and sell items within your university.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick links</h3>
+                        <ul>
+                            <li><a href="../Homepage.php">Home</a></li>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Terms and services</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2025 CampusTrade. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     
     <script src="javascript/index.js"></script>
 </body>
